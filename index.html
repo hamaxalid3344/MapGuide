@@ -1325,11 +1325,121 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
     transform: scale(0.95);
 }
 
+/* Location Dialog Styles */
+#location-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 10000; /* دڵنیابەرەوە لە هەموو شتێک بەرزترە */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#location-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--card-bg); /* بۆ ئەوەی لەگەڵ ڕەنگی سایتەکەت بگونجێت */
+    padding: 2rem;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 90%;
+    width: 340px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(0.7);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#location-modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-icon-box {
+    width: 70px;
+    height: 70px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.modal-title {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.modal-text {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.modal-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: inherit;
+}
+
+.btn-allow {
+    background: var(--primary-color);
+    color: white;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-allow:active {
+    transform: scale(0.98);
+}
+
+.btn-deny {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+
 
     </style>
 
 </head>
 <body data-theme="light">
+
+    <!-- Location Permission Dialog -->
+<div id="location-modal">
+    <div class="modal-content">
+        <div class="modal-icon-box">
+            <i class="fas fa-location-dot"></i>
+        </div>
+        <h2 class="modal-title">دیاریکردنی شوێن</h2>
+        <p class="modal-text">بۆ دۆزینەوەی نزیکترین شوێنەکان، تکایە ڕێگە بدە شوێنەکەت دیاری بکەین.</p>
+        <button class="modal-btn btn-allow" onclick="requestUserLocation()">بەڵێ، ڕازیم</button>
+        <button class="modal-btn btn-deny" onclick="closeLocationModal()">نەخێر</button>
+    </div>
+</div>
+
 
     <!-- Auth Overlay -->
     <div id="auth-container">
@@ -1378,6 +1488,7 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
         <div class="color-dot" style="background:#10b981" onclick="setThemeColor('#10b981')"></div>
         <div class="color-dot" style="background:#f59e0b" onclick="setThemeColor('#f59e0b')"></div>
         <div class="color-dot" style="background:#8b5cf6" onclick="setThemeColor('#8b5cf6')"></div>
+        <div class="color-dot" style="background:#FFCC00" onclick="setThemeColor('#FFCC00')"></div>
     </div>
 
     <!-- Main App -->
@@ -2230,6 +2341,48 @@ async function copyLocation() {
         console.error('Error copying:', err);
     }
 }
+
+// Function to show modal
+function showLocationModal() {
+    // تەنها ئەگەر پێشتر ڕێگەی نەدابێت یان ڕەتی نەکردبێتەوە
+    if (!localStorage.getItem('locationPreference')) {
+        setTimeout(() => {
+            const modal = document.getElementById('location-modal');
+            modal.style.display = 'flex';
+            // کەمێک چاوەڕێ دەکەین بۆ ئەنیمەیشنەکە
+            setTimeout(() => modal.classList.add('show'), 10);
+        }, 1500); // دوای ١.٥ چرکە دەردەکەوێت
+    } else {
+        // ئەگەر پێشتر ڕازی بووبێت، یەکسەر لۆکەیشن وەربگرە
+        if (localStorage.getItem('locationPreference') === 'granted') {
+            getUserLocation();
+        }
+    }
+}
+
+// لەکاتی کردنەوەی پەیج
+window.addEventListener('load', showLocationModal);
+
+function requestUserLocation() {
+    closeLocationModal();
+    localStorage.setItem('locationPreference', 'granted');
+    getUserLocation(); // ئەمە ئەو فانکشنەیە کە لە کۆدە ئەسڵیەکەتدا هەیە
+}
+
+function closeLocationModal() {
+    const modal = document.getElementById('location-modal');
+    modal.classList.remove('show');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+    
+    // ئەگەر نەخێری کرد، دیاری دەکەین کە جاری داهاتوو پرسیار نەکاتەوە (بە خواستی خۆت)
+    if (!localStorage.getItem('locationPreference')) {
+         // دەتوانیت ئەمە لاببەیت ئەگەر دەتەوێت هەموو جارێک لێی بپرسێت
+         // localStorage.setItem('locationPreference', 'denied');
+    }
+}
+
 
 
     </script>
