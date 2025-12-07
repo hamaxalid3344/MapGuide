@@ -1325,100 +1325,74 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
     transform: scale(0.95);
 }
 
-/* Location Dialog Styles */
-#location-modal {
+/* Unique Location Modal Styles */
+#loc-permission-modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    z-index: 10000; /* دڵنیابەرەوە لە هەموو شتێک بەرزترە */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 999999; /* زۆر بەرز بۆ ئەوەی بچێتە سەر هەموو شتێک */
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-#location-modal.show {
+#loc-permission-modal.loc-show {
     display: flex;
     opacity: 1;
 }
 
-.modal-content {
-    background: var(--card-bg); /* بۆ ئەوەی لەگەڵ ڕەنگی سایتەکەت بگونجێت */
-    padding: 2rem;
-    border-radius: 24px;
+.loc-modal-card {
+    background: #1e293b; /* ڕەنگێکی تاریکی جوان */
+    padding: 24px;
+    border-radius: 20px;
     text-align: center;
+    width: 320px;
     max-width: 90%;
-    width: 340px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transform: scale(0.7);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
 }
 
-#location-modal.show .modal-content {
+#loc-permission-modal.loc-show .loc-modal-card {
     transform: scale(1);
 }
 
-.modal-icon-box {
-    width: 70px;
-    height: 70px;
-    background: rgba(16, 185, 129, 0.1);
+.loc-icon-wrapper {
+    width: 60px; height: 60px;
+    background: rgba(16, 185, 129, 0.15);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem auto;
-    font-size: 2rem;
-    color: var(--primary-color);
+    display: flex; justify-content: center; align-items: center;
+    margin: 0 auto 16px auto;
+    font-size: 28px; color: #10b981;
 }
 
-.modal-title {
-    margin: 0 0 0.5rem 0;
-    color: var(--text-color);
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-
-.modal-text {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    line-height: 1.6;
-    font-size: 0.95rem;
-}
-
-.modal-btn {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 16px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
+.loc-title {
+    color: white; font-size: 1.2rem; font-weight: bold; margin-bottom: 8px;
     font-family: inherit;
 }
 
-.btn-allow {
-    background: var(--primary-color);
-    color: white;
-    margin-bottom: 0.8rem;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+.loc-message {
+    color: #94a3b8; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5;
+    font-family: inherit;
 }
 
-.btn-allow:active {
-    transform: scale(0.98);
+.loc-btn {
+    width: 100%; padding: 14px; border-radius: 12px; border: none;
+    font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 8px;
+    font-family: inherit; transition: 0.2s;
 }
 
-.btn-deny {
-    background: transparent;
-    color: var(--text-secondary);
-}
+.loc-btn-confirm { background: #10b981; color: white; }
+.loc-btn-confirm:active { transform: scale(0.98); }
+
+.loc-btn-cancel { background: transparent; color: #64748b; }
+.loc-btn-cancel:hover { color: #cbd5e1; }
+
+
 
 
 
@@ -1428,17 +1402,18 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
 <body data-theme="light">
 
     <!-- Location Permission Dialog -->
-<div id="location-modal">
-    <div class="modal-content">
-        <div class="modal-icon-box">
+<div id="loc-permission-modal">
+    <div class="loc-modal-card">
+        <div class="loc-icon-wrapper">
             <i class="fas fa-location-dot"></i>
         </div>
-        <h2 class="modal-title">دیاریکردنی شوێن</h2>
-        <p class="modal-text">بۆ دۆزینەوەی نزیکترین شوێنەکان، تکایە ڕێگە بدە شوێنەکەت دیاری بکەین.</p>
-        <button class="modal-btn btn-allow" onclick="requestUserLocation()">بەڵێ، ڕازیم</button>
-        <button class="modal-btn btn-deny" onclick="closeLocationModal()">نەخێر</button>
+        <h3 class="loc-title">دیاریکردنی شوێن</h3>
+        <p class="loc-message">تکایە ڕێگە بدە شوێنەکەت دیاری بکەین بۆ دۆزینەوەی نزیکترین شوێنەکان.</p>
+        <button class="loc-btn loc-btn-confirm" onclick="confirmLocPermission()">بەڵێ، ڕازیم</button>
+        <button class="loc-btn loc-btn-cancel" onclick="dismissLocModal()">نەخێر</button>
     </div>
 </div>
+
 
 
     <!-- Auth Overlay -->
@@ -2342,46 +2317,48 @@ async function copyLocation() {
     }
 }
 
-// Function to show modal
-function showLocationModal() {
-    // تەنها ئەگەر پێشتر ڕێگەی نەدابێت یان ڕەتی نەکردبێتەوە
-    if (!localStorage.getItem('locationPreference')) {
-        setTimeout(() => {
-            const modal = document.getElementById('location-modal');
-            modal.style.display = 'flex';
-            // کەمێک چاوەڕێ دەکەین بۆ ئەنیمەیشنەکە
-            setTimeout(() => modal.classList.add('show'), 10);
-        }, 1500); // دوای ١.٥ چرکە دەردەکەوێت
-    } else {
-        // ئەگەر پێشتر ڕازی بووبێت، یەکسەر لۆکەیشن وەربگرە
-        if (localStorage.getItem('locationPreference') === 'granted') {
-            getUserLocation();
-        }
+
+// Function to trigger location modal
+function triggerLocModal() {
+    // Check local storage with unique key
+    if (localStorage.getItem('app_loc_status') === 'granted') {
+        getUserLocation(); // بانگکردنی فانکشنە ئەسڵییەکەی خۆت
+        return;
+    }
+    
+    // ئەگەر پێشتر ڕەتی نەکردبێتەوە (یان ئەگەر دەتەوێت هەموو جارێک بێت ئەم مەرجە لادە)
+    if (localStorage.getItem('app_loc_status') !== 'denied') {
+        const modal = document.getElementById('loc-permission-modal');
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('loc-show'), 10);
     }
 }
 
-// لەکاتی کردنەوەی پەیج
-window.addEventListener('load', showLocationModal);
-
-function requestUserLocation() {
-    closeLocationModal();
-    localStorage.setItem('locationPreference', 'granted');
-    getUserLocation(); // ئەمە ئەو فانکشنەیە کە لە کۆدە ئەسڵیەکەتدا هەیە
+// ئەم فانکشنە بخە ناو دوگمەی "دەستپێکردن"ەکەت (Get Started)
+// <button ... onclick="handleAppStart()">...
+function handleAppStart() {
+    // کۆدەکانی تری خۆت بۆ لابردنی Welcome Screen (ئەگەر هەیە)
+    // document.getElementById('welcome-screen')....
+    
+    triggerLocModal();
 }
 
-function closeLocationModal() {
-    const modal = document.getElementById('location-modal');
-    modal.classList.remove('show');
+function confirmLocPermission() {
+    dismissLocModal();
+    localStorage.setItem('app_loc_status', 'granted');
+    getUserLocation(); // بانگکردنی فانکشنە ئەسڵییەکەی خۆت
+}
+
+function dismissLocModal() {
+    const modal = document.getElementById('loc-permission-modal');
+    modal.classList.remove('loc-show');
     setTimeout(() => {
         modal.style.display = 'none';
     }, 300);
-    
-    // ئەگەر نەخێری کرد، دیاری دەکەین کە جاری داهاتوو پرسیار نەکاتەوە (بە خواستی خۆت)
-    if (!localStorage.getItem('locationPreference')) {
-         // دەتوانیت ئەمە لاببەیت ئەگەر دەتەوێت هەموو جارێک لێی بپرسێت
-         // localStorage.setItem('locationPreference', 'denied');
-    }
+    // ئەگەر نەتەوێت ئیتر بێزارت بکات:
+    // localStorage.setItem('app_loc_status', 'denied');
 }
+
 
 
 
