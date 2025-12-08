@@ -1476,7 +1476,7 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
                 <div class="controls-row">
                     <div class="lang-dropdown">
                         <button class="lang-btn" onclick="toggleLangMenu()">
-                            <span class="material-icons-round" style="font-size:18px">language</span>
+                            <span class="material-icons-round" style="color:var(--primary); font-size:18px">language</span>
                             <span id="cur-lang">KU</span>
                         </button>
                         <div class="lang-menu">
@@ -1486,14 +1486,14 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
                         </div>
                     </div>
                     <div class="icon-btn-small" onclick="toggleDarkMode()">
-                        <span class="material-icons-round" id="dark-icon">dark_mode</span>
+                        <span class="material-icons-round" style="color: var(--primary);" id="dark-icon">dark_mode</span>
                     </div>
                     <div class="icon-btn-small" onclick="togglePalette()">
-                        <span class="material-icons-round">palette</span>
+                        <span class="material-icons-round" style="color: var(--primary);">palette</span>
                     </div>
 
-                                        <div class="icon-btn-small" onclick="openAbout()">
-    <span class="material-icons-round">info</span>
+                        <div class="icon-btn-small" onclick="openAbout()">
+                        <span class="material-icons-round" style="color: var(--primary);">info</span>
 </div>
                 </div>
             </div>
@@ -1509,7 +1509,7 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
                         <!-- Search Location Box (لە دوای location-card) -->
 <div class="search-location-box">
     <div class="search-input-wrapper">
-        <span class="material-icons-round search-icon">search</span>
+        <span class="material-icons-round search-icon"> search</span>
         <input 
             type="text" 
             id="location-search-input" 
