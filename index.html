@@ -6,7 +6,8 @@
     <title>MapGuide</title>
     
     <!-- ========== ئەمانە زیاد بکە ========== -->
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
     
@@ -1394,7 +1395,181 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
 .loc-btn-cancel:hover { color: #cbd5e1; }
 
 
+/* گۆڕینی دیزاینی کۆنترۆڵی لایەرەکان */
+.leaflet-control-layers {
+    background: #fff;
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    padding: 10px !important;
+    font-family: 'Rabar_021', sans-serif !important;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
 
+/* بۆ Dark Mode */
+body.dark-theme .leaflet-control-layers {
+    background: #1e293b;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+}
+
+/* لابردنی هێڵەکان و ستایلی ناشرین */
+.leaflet-control-layers-toggle {
+    background-image: url('images/layers.png'); /* دەتوانیت ئایکۆنێکی جوانتر دابنێیت */
+    width: 44px !important;
+    height: 44px !important;
+    background-size: 24px !important;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+body.dark-theme .leaflet-control-layers-toggle {
+    background-color: #334155;
+    filter: invert(1); /* ئەگەر ئایکۆنەکە ڕەش بێت، سپی دەبێتەوە */
+}
+
+/* کاتێک لیستەکە دەکرێتەوە */
+.leaflet-control-layers-expanded {
+    padding: 15px !important;
+    min-width: 180px;
+    background: #fff;
+}
+
+body.dark-theme .leaflet-control-layers-expanded {
+    background: #1e293b;
+}
+
+/* ستایلی هەر هەڵبژاردەیەک (Radio Button) */
+.leaflet-control-layers-base label {
+    display: flex !important;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.leaflet-control-layers-base label:hover {
+    background: #f1f5f9;
+}
+
+body.dark-theme .leaflet-control-layers-base label:hover {
+    background: #334155;
+}
+
+/* شاردنەوەی Radio Buttonـە ناشرینەکە */
+.leaflet-control-layers-base input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    margin-left: 10px; /* مەودا لەگەڵ دەقەکە */
+    position: relative;
+    cursor: pointer;
+    outline: none;
+}
+
+/* کاتێک هەڵدەبژێردرێت */
+.leaflet-control-layers-base input[type="radio"]:checked {
+    border-color: #3b82f6; /* ڕەنگی شین */
+    background-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* زیادکردنی خاڵێک بۆ ناو بازنەکە */
+.leaflet-control-layers-base input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+/* تێکستەکان */
+.leaflet-control-layers-base span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* گۆڕینی فۆنتی گشتی Alertەکە */
+.my-swal-popup {
+    font-family: 'UniSIRWAN Qabas', 'Noto Sans Arabic', 'Inter', sans-serif; 
+    border-radius: 24px !important;
+    padding: 24px !important;
+    background-color: #e5e7eb !important;
+}
+
+/* سەردێڕ */
+.my-swal-title {
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 10px !important;
+}
+
+/* دەقی ناوەڕۆک */
+.my-swal-text {
+    font-size: 1rem !important;
+    opacity: 0.8;
+    line-height: 1.6 !important;
+}
+
+/* دوگمەی "باشە" */
+.my-swal-confirm {
+    background-color: #3b82f6 !important; /* ڕەنگی شینی سەرەکی */
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    font-size: 1rem !important;
+    font-family: inherit !important;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0 5px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.my-swal-confirm:hover {
+    background-color: #2563eb !important;
+    transform: translateY(-2px);
+}
+
+/* دوگمەی "داخستن" */
+.my-swal-cancel {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    font-size: 1rem !important;
+    font-family: inherit !important;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0 5px;
+}
+
+.my-swal-cancel:hover {
+    background-color: #cbd5e1 !important;
+}
+
+/* ستایل بۆ Dark Mode */
+body.dark-theme .my-swal-cancel {
+    background-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+body.dark-theme .my-swal-cancel:hover {
+    background-color: #475569 !important;
+}
 
 
     </style>
@@ -1531,16 +1706,61 @@ main { padding: 0 1.5rem 2rem 1.5rem; }
         <main>
             <h3 class="section-title" data-key="categories">بەشەکان</h3>
             <div class="categories-grid">
-                <div class="cat-card" onclick="selectCategory(this, 'police', 'police')"><div class="cat-icon police-color"><span class="material-icons-round">security</span></div><span class="t-label" data-key="police">ئاسایش</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'hospital', 'hospital')"><div class="cat-icon hospital-color"><span class="material-icons-round">nightlight</span></div><span class="t-label" data-key="hospital">نەخۆشخانە</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'pharmacy', 'pharmacy')"><div class="cat-icon pharmacy-color"><span class="material-icons-round">medication</span></div><span class="t-label" data-key="pharmacy">دەرمانخانە</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'restaurant', 'restaurant')"><div class="cat-icon food-color"><span class="material-icons-round">restaurant</span></div><span class="t-label" data-key="restaurant">خواردنگە</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'fuel', 'fuel')"><div class="cat-icon fuel-color"><span class="material-icons-round">local_gas_station</span></div><span class="t-label" data-key="fuel">بەنزینخانە</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'mosque', 'mosque')"><div class="cat-icon mosque-color"><span class="material-icons-round">mosque</span></div><span class="t-label" data-key="mosque">مزگەوت</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'school', 'school')"><div class="cat-icon school-color"><span class="material-icons-round">school</span></div><span class="t-label" data-key="school">قوتابخانە</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'university', 'university')"><div class="cat-icon uni-color"><span class="material-icons-round">school</span></div><span class="t-label" data-key="university">زانکۆ</span></div>
-                <div class="cat-card" onclick="selectCategory(this, 'government', 'government')"><div class="cat-icon gov-color"><span class="material-icons-round">account_balance</span></div><span class="t-label" data-key="government">حکومی</span></div>
-            </div>
+    <!-- پۆلیس -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'police', 'police'))">
+        <div class="cat-icon police-color"><span class="material-icons-round">security</span></div>
+        <span class="t-label" data-key="police">ئاسایش</span>
+    </div>
+
+    <!-- نەخۆشخانە -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'hospital', 'hospital'))">
+        <div class="cat-icon hospital-color"><span class="material-icons-round">nightlight</span></div>
+        <span class="t-label" data-key="hospital">نەخۆشخانە</span>
+    </div>
+
+    <!-- دەرمانخانە -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'pharmacy', 'pharmacy'))">
+        <div class="cat-icon pharmacy-color"><span class="material-icons-round">medication</span></div>
+        <span class="t-label" data-key="pharmacy">دەرمانخانە</span>
+    </div>
+
+    <!-- خواردنگە -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'restaurant', 'restaurant'))">
+        <div class="cat-icon food-color"><span class="material-icons-round">restaurant</span></div>
+        <span class="t-label" data-key="restaurant">خواردنگە</span>
+    </div>
+
+    <!-- بەنزینخانە -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'fuel', 'fuel'))">
+        <div class="cat-icon fuel-color"><span class="material-icons-round">local_gas_station</span></div>
+        <span class="t-label" data-key="fuel">بەنزینخانە</span>
+    </div>
+
+    <!-- مزگەوت -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'mosque', 'mosque'))">
+        <div class="cat-icon mosque-color"><span class="material-icons-round">mosque</span></div>
+        <span class="t-label" data-key="mosque">مزگەوت</span>
+    </div>
+
+    <!-- قوتابخانە -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'school', 'school'))">
+        <div class="cat-icon school-color"><span class="material-icons-round">school</span></div>
+        <span class="t-label" data-key="school">قوتابخانە</span>
+    </div>
+
+    <!-- زانکۆ -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'university', 'university'))">
+        <div class="cat-icon uni-color"><span class="material-icons-round">school</span></div>
+        <span class="t-label" data-key="university">زانکۆ</span>
+    </div>
+
+    <!-- حکومی -->
+    <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'government', 'government'))">
+        <div class="cat-icon gov-color"><span class="material-icons-round">account_balance</span></div>
+        <span class="t-label" data-key="government">حکومی</span>
+    </div>
+</div>
+
 
             <div class="results-section">
                 <h3 id="result-title" class="section-title" data-key="nearby">نزیکترین شوێنەکان</h3>
@@ -1775,7 +1995,10 @@ const trans = {
         version: "وەشانی ١.٠.٠",
         credit_osm: "نەخشە و زانیاریەکان",
         credit_leaflet: "کتێبخانەی نەخشە",
-        credit_nominatim: "خزمەتگوزاری گەڕان"
+        credit_nominatim: "خزمەتگوزاری گەڕان",
+        map_normal: "نەخشەی ئاسایی",
+        map_satellite: "سەتەلایت",
+        map_dark: "نەخشەی تاریک"
     },
     en: {
         police: "Police", 
@@ -1842,7 +2065,10 @@ const trans = {
         credits_title: "Credits",
         credit_osm: "Maps and data",
         credit_leaflet: "Map library",
-        credit_nominatim: "Search service"
+        credit_nominatim: "Search service",
+        map_normal: "The ordinary map",
+        map_satellite: "Satellite",
+        map_dark: "The dark map"
     },
     ar: {
         police: "الشرطة", 
@@ -1909,7 +2135,10 @@ const trans = {
         credits_title: "شكر وتقدير",
         credit_osm: "الخرائط والبيانات",
         credit_leaflet: "مكتبة الخرائط",
-        credit_nominatim: "خدمة البحث"
+        credit_nominatim: "خدمة البحث",
+        map_normal: "الخريطة العادية",
+        map_satellite: "القمر الصناعي",
+        map_dark: "الخريطة المظلمة"
     }
 };
 
@@ -1965,23 +2194,52 @@ async function updateLocUI(lat, lon) {
     } catch(e) { document.getElementById('location-name').innerText = `${lat.toFixed(4)}, ${lon.toFixed(4)}`; }
 }
 
-// --- MAP MODAL ---
+
 function openMap() {
-    document.getElementById('map-modal').style.display = 'flex';
+    const modal = document.getElementById('map-modal');
+    modal.style.display = 'flex'; // مۆداڵەکە بکەرەوە
+    setTimeout(() => modal.classList.add('active'), 10); // ئەنیمەیشن
+
     const lat = userLat || 36.19, lon = userLon || 44.00;
+
+    // چاوەڕێ دەکەین تا مۆداڵەکە دەکرێتەوە (300ms)
     setTimeout(() => {
-        if(!map) {
-            map = L.map('map').setView([lat, lon], 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        if (!map) {
+            // === پێناسەکردنی نەخشە و لایەرەکان ===
+            const streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 });
+            const satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 });
+            const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 });
+
+            map = L.map('map', {
+                center: [lat, lon],
+                zoom: 15,
+                layers: [streetMap]
+            });
+
+            const baseMaps = {
+    "<span data-key='map_normal'>نەخشەی ئاسایی</span>": streetMap,
+    "<span data-key='map_satellite'>سەتەلایت</span>": satelliteMap,
+    "<span data-key='map_dark'>نەخشەی تاریک</span>": darkMap
+};
+
+L.control.layers(baseMaps, null, { position: 'bottomleft' }).addTo(map);
+
+
             marker = L.marker([lat, lon], {draggable: true}).addTo(map);
             map.on('click', e => marker.setLatLng(e.latlng));
         } else {
+            // ئەگەر نەخشەکە هەبوو
             map.setView([lat, lon], 15);
             marker.setLatLng([lat, lon]);
-            map.invalidateSize();
+            
+            // *** ئەم دێڕە زۆر گرنگە! ***
+            // قەبارەی نەخشەکە ڕاست دەکاتەوە دوای کردنەوەی مۆداڵ
+            map.invalidateSize(); 
         }
-    }, 200);
+    }, 300); // دەبێت کەمێک چاوەڕێ بکەین (300ms باشە)
 }
+
+
 function closeMap() { document.getElementById('map-modal').style.display = 'none'; }
 function confirmLocation() {
     const p = marker.getLatLng();
@@ -2360,7 +2618,86 @@ function dismissLocModal() {
     // localStorage.setItem('app_loc_status', 'denied');
 }
 
+function requireLocation(actionCallback) {
+    if (!userLat || !userLon) {
+        const isDarkMode = document.body.classList.contains('dark-theme');
 
+        // --- گۆڕانکاری گرنگ ---
+        // هەوڵدەدەین زمانەکە لە چەند شوێنێکەوە بهێنین بۆ دڵنیایی
+        // 1. سەرەتا لە localStorage (ئەگەر سەیڤ کرابێت)
+        // 2. یان لە attributeـی html (کە زۆربەی کتێبخانەکانی وەرگێڕان دەیگۆڕن)
+        // 3. ئەگەر هیچ نەبوو، بیکە بە کوردی
+        let currentLang = localStorage.getItem('selectedLanguage') || document.documentElement.lang || 'ku';
+        
+        // دڵنیابوونەوە کە کۆدی زمانەکە دروستە (هەندێک جار 'ku-IQ' دەگەڕێتەوە)
+        if (currentLang.includes('ar')) currentLang = 'ar';
+        else if (currentLang.includes('en')) currentLang = 'en';
+        else currentLang = 'ku';
+        
+        const texts = {
+            ku: {
+                title: 'پێویستە شوێن دیاری بکەیت',
+                text: 'بۆ بەکارهێنانی ئەم بەشە، تکایە سەرەتا شوێنەکەت لەسەر نەخشە دیاری بکە.',
+                confirm: 'باشە، شوێن دیاری دەکەم',
+                cancel: 'داخستن'
+            },
+            ar: {
+                title: 'يجب تحديد الموقع',
+                text: 'لاستخدام هذا القسم، يرجى تحديد موقعك على الخريطة أولاً.',
+                confirm: 'حسناً، حدد الموقع',
+                cancel: 'إغلاق'
+            },
+            en: {
+                title: 'Location Required',
+                text: 'To use this section, please select your location on the map first.',
+                confirm: 'OK, Select Location',
+                cancel: 'Close'
+            }
+        };
+
+        const t = texts[currentLang] || texts.ku;
+
+        Swal.fire({
+            title: t.title,
+            text: t.text,
+            icon: 'warning', // یان دەتوانیت وێنەی تایبەت بەکاربهێنیت: imageUrl: 'images/map-icon.png'
+            showCancelButton: true,
+            confirmButtonText: t.confirm,
+            cancelButtonText: t.cancel,
+            reverseButtons: true, // بۆ ئەوەی دوگمەی "باشە" لە لای ڕاست بێت (بۆ کوردی/عەرەبی)
+            
+            // --- ڕێکخستنی ستایل (Custom Class) ---
+            customClass: {
+                popup: 'my-swal-popup',
+                title: 'my-swal-title',
+                htmlContainer: 'my-swal-text',
+                confirmButton: 'my-swal-confirm',
+                cancelButton: 'my-swal-cancel'
+            },
+            buttonsStyling: false, // خۆمان ستایلی دوگمەکان دەکەین لە CSS
+            
+            // --- ڕەنگەکان ---
+            background: isDarkMode ? '#1e293b' : '#ffffff',
+            color: isDarkMode ? '#f8fafc' : '#0f172a',
+            
+            // --- ئەنیمەیشن ---
+            showClass: {
+                popup: 'animate__animated animate__fadeInUp animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutDown animate__faster'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                openMap();
+            }
+        });
+    } else {
+        if (typeof actionCallback === 'function') {
+            actionCallback();
+        }
+    }
+}
 
 
     </script>
