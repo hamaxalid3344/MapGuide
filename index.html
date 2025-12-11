@@ -1572,6 +1572,32 @@ body.dark-theme .my-swal-cancel:hover {
 }
 
 
+/* ڕەنگی تایبەت بە هەفتە بازاڕ */
+.market-color {
+    background: rgba(255, 152, 0, 0.1); /* پاشبنەمای کاڵ */
+    color: #ff9800; /* ڕەنگی ئایکۆن */
+}
+
+/* بۆ Dark Mode - کەمێک ڕوونتر دەبێتەوە */
+body.dark-theme .market-color {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ffb74d;
+}
+
+
+.supermarket-color {
+    background: rgba(233, 30, 99, 0.1); /* پاشبنەمای پەمەیی */
+    color: #e91e63; /* ڕەنگی پەمەیی */
+}
+
+body.dark-theme .supermarket-color {
+    background: rgba(233, 30, 99, 0.2);
+    color: #f48fb1;
+}
+
+
+
+
     </style>
 
 </head>
@@ -1723,6 +1749,17 @@ body.dark-theme .my-swal-cancel:hover {
         <div class="cat-icon pharmacy-color"><span class="material-icons-round">medication</span></div>
         <span class="t-label" data-key="pharmacy">دەرمانخانە</span>
     </div>
+
+
+<!-- مارکێت -->
+<div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'supermarket', 'supermarket'))">
+    <div class="cat-icon market-color"> <!-- دەتوانیت ڕەنگەکەی بگۆڕیت -->
+        <span class="material-icons-round">shopping_cart</span>
+    </div>
+    <span class="t-label" data-key="supermarket">مارکێت</span>
+</div>
+
+
 
     <!-- خواردنگە -->
     <div class="cat-card" onclick="requireLocation(() => selectCategory(this, 'restaurant', 'restaurant'))">
@@ -1943,6 +1980,7 @@ const trans = {
     confirm_clear: "دڵنیایت لە سڕینەوەی هەموو مێژووەکە؟",
     just_now: "ئێستا",
     mins_ago: "خولەک پێشتر",
+    market: "هەفتە بازاڕ",
     hours_ago: "کاتژمێر پێشتر",
     days_ago: "ڕۆژ پێشتر",
         restaurant: "خواردنگە", 
@@ -1995,6 +2033,7 @@ const trans = {
         version: "وەشانی ١.٠.٠",
         credit_osm: "نەخشە و زانیاریەکان",
         credit_leaflet: "کتێبخانەی نەخشە",
+         supermarket: "مارکێت",
         credit_nominatim: "خزمەتگوزاری گەڕان",
         map_normal: "نەخشەی ئاسایی",
         map_satellite: "سەتەلایت",
@@ -2022,11 +2061,13 @@ const trans = {
         footer: "© 2025 MapGuide. All rights reserved.",
         mosque: "Mosque", 
         fuel: "Fuel", 
+        supermarket: "Supermarket",
         dozinawa: "Search",
         school: "School",
         current_loc: "Current Location", 
         tap_set: "Tap to set location", 
         nearby: "Nearby", 
+        market: "Weekly Market",
         categories: "Categories", 
         select_cat: "Select a category", 
           history_title: "Search History",
@@ -2082,8 +2123,10 @@ const trans = {
     cancel: "إلغاء",
     confirm: "تأكيد",
         navigate: "التنقل",
+        supermarket: "سوبر ماركت",
         share_title: "مشاركة الموقع",
     share_native: "مشاركة",
+    market: "سوق أسبوعي",
      history_title: "سجل البحث",
     history_empty: "لا يوجد سجل بحث",
     clear_history: "مسح السجل",
@@ -2265,6 +2308,7 @@ async function selectCategory(el, type, key) {
 
     const tagMap = {
         'police': '["amenity"="police"]', 'university': '["amenity"="university"]', 'government': '["office"~"government"]',
+        'market': '["amenity"="marketplace"]','supermarket': '["shop"="supermarket"]',
         'hospital': '["amenity"="hospital"]', 'pharmacy': '["amenity"="pharmacy"]', 'restaurant': '["amenity"="restaurant"]',
         'mosque': '["amenity"="place_of_worship"]["religion"="muslim"]', 'fuel': '["amenity"="fuel"]', 'school': '["amenity"="school"]'
     };
